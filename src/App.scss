@@ -1,0 +1,168 @@
+$bg-color: #333;
+
+$primary-color: #F3D55E;
+$secondary-color: #282826;
+
+body {
+  background-color: $bg-color;
+}
+
+.client-list {
+  display: flex;
+  flex-direction: column;
+
+  .client-list-item {
+    flex-grow: 1;
+  
+    margin-bottom: 5px;
+    margin-left: 10px;
+    margin-right: 10px;
+  
+    color: darken($primary-color, 60%);
+    background-color: $primary-color;
+
+    &:hover, &.open {
+      background-color: darken($primary-color, 10% );
+   
+      .client-list-item-header .delete {
+        color: darken($primary-color, 30%);
+      }
+    }
+
+    &.open {
+      .client-list-item-header {
+        border-width: 1px;
+        border-style: solid;
+        border-color: lighten($primary-color, 30% );
+      }
+    }
+
+    .client-list-item-header {
+      display: flex;
+      cursor: pointer;
+
+      .name {
+        padding: 5px;
+        flex-grow: 1;
+      }
+
+      .delete {
+        cursor: pointer;
+        color: $primary-color;
+        padding: 5px;
+      }
+    }
+
+    .client-detail {
+      background-color: lighten($bg-color, 20%);
+      padding: 10px;
+
+      .react-tabs {
+        ul.react-tabs__tab-list {
+          margin: 0;
+          padding:0;
+        }
+
+        li.react-tabs__tab{
+          display: inline-block;
+          list-style-type: none;
+          background-color: $primary-color;
+          padding: 10px;
+          margin-right:5px;
+          cursor: pointer;
+
+          &.react-tabs__tab--selected{
+            background-color: darken($primary-color, 20%);
+          }
+        }
+
+        .react-tabs__tab-panel--selected {
+          background-color: lighten($bg-color, 40%);
+          margin: 0;
+          padding: 15px;
+
+          .title {
+            color: lighten($secondary-color, 10%); 
+            margin: 0;
+            margin-bottom:10px;
+            font-size: 3vh
+          }
+        }
+
+      }
+    }
+
+  }
+}
+
+
+.bills-list-container {
+  .bills-list {
+    margin-bottom: 20px;
+
+    .bills-list-item {
+      display: flex;
+      flex-direction: row;
+      padding: 7px 5px;
+
+      &:nth-child(odd){
+        background-color: lighten($bg-color, 48%);
+      }
+
+      .name, .date, .amount,  .delete {
+        flex: 2;
+        padding: 0 3px; 
+      }
+      .name {
+        flex: 3;
+      }
+
+      .amount {
+        text-align: right;
+      }
+
+      .currency {
+        font-size: 2vh;
+        padding-top: 5px ;
+      }
+
+      .delete {
+        flex: 1;
+        justify-self: flex-end;
+        flex-shrink: 1;
+        cursor: pointer;
+        visibility: hidden;
+      }
+
+      &:hover{
+        .delete {
+          visibility: visible;
+          color: darken($secondary-color, 30%);
+        }
+      }
+    }
+
+    .bill-sum {
+      padding: 10px;
+      margin-right: 10%;
+      text-align: right;
+
+      .other-currencies, .default-currency, .total  {
+        padding: 5px 0;
+
+        .currency{
+          font-size: 2vh;
+          padding-left:5px;
+        }
+      }
+
+      .other-currencies {
+        color: lighten($bg-color, 20%);
+      }
+      .default-currency {
+      }
+      .total {
+      }
+    }
+  }
+}
