@@ -25,7 +25,7 @@ export default class BillListItem extends Component {
 
         return (
             <div className='bills-list-item'>
-                <span className='date'>{formatDate(bill.asOfDate)}</span>
+                <span className='date'>{formatDate(bill.asOfDate || new Date())}</span>
                 <span className='name'>{bill.name}</span>
                 <span className='amount'>{formatCurrency(bill.amount, bill.currency)}</span>
                 <span className='currency'>{bill.currency}</span>

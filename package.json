@@ -2,18 +2,35 @@
   "name": "billiance",
   "version": "0.1.0",
   "private": true,
+  "mode": "development",
   "main": "electron-starter.js",
   "devDependencies": {
+    "@babel/core": "^7.2.2",
+    "@babel/plugin-proposal-class-properties": "^7.3.0",
+    "@babel/plugin-syntax-dynamic-import": "^7.2.0",
+    "@babel/preset-env": "^7.3.1",
+    "@babel/preset-react": "^7.0.0",
+    "babel-loader": "^8.0.5",
+    "css-loader": "^2.1.0",
     "electron": "^4.0.4",
-    "react-scripts": "2.1.3"
+    "html-loader": "^0.5.5",
+    "html-webpack-plugin": "^3.2.0",
+    "node-sass": "^4.11.0",
+    "react-scripts": "2.1.3",
+    "sass-loader": "^7.1.0",
+    "style-loader": "^0.23.1",
+    "webpack": "^4.29.3",
+    "webpack-cli": "^3.2.3",
+    "webpack-dev-server": "^3.1.14",
+    "yarn-run-all": "^3.1.1"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.14",
     "@fortawesome/free-solid-svg-icons": "^5.7.1",
     "@fortawesome/react-fontawesome": "^0.1.4",
+    "electron-reload": "^1.4.0",
     "informed": "^1.10.12",
     "moment": "^2.24.0",
-    "node-sass": "^4.11.0",
     "pouchdb": "^7.0.0",
     "pouchdb-find": "^7.0.0",
     "react": "^16.7.0",
@@ -26,10 +43,8 @@
     "react-tabs": "^3.0.0"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
+    "start": "npm-run-all --parallel build electron",
+    "build": "webpack --mode production",
     "electron": "electron ."
   },
   "eslintConfig": {

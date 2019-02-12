@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Billiance",
+  "name": "Manage your bills and finance",
   "icons": [
     {
       "src": "favicon.ico",

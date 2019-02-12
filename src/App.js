@@ -6,7 +6,6 @@ import ClientList from './components/ClientList';
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 
-
 HTMLElement.prototype.toggleShow = function() {
   let style = this.style;
   if(style.display === 'block'){
@@ -30,6 +29,7 @@ class App extends Component {
   render() {
     return (
       <div className='container'>
+        <h1 className="logo-title">Billiance</h1>
         <Notification />
         <ClientList />
       </div>

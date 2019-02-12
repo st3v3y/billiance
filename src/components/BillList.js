@@ -3,8 +3,9 @@ import PouchDB from 'pouchdb'
 import PouchdbFind from 'pouchdb-find';
 import { SettingsContext } from '../SettingsContext'
 import BillListItem from './BillListItem'
-import { Form, TextArea, Text, Select, Option, reset } from 'informed';
+import { Form, TextArea, Text, Select, Option } from 'informed';
 import { DateInput } from '../CustomFormElements'
+import { required } from '../helpers/form-validation';
 
 export default class BillList extends Component {
     billsDB = null;
@@ -186,34 +187,73 @@ export default class BillList extends Component {
             <div className='bills-list-container'>
                 <div className='bills-list'>
                     {clientBills}
-                    <BillSum data={this.state.statistic} />
+                    {this.state.bills.length > 0 ? (
+                        <BillSum data={this.state.statistic} />
+                        ) : (
+                            <span>No bills</span>
+                        )
+                    }
                 </div>
 
-                <Form id="simple-form" onSubmit={this.handleOnFormSubmit} className='add-bill-form' >
-                    <label htmlFor="name-field">Name:</label>
-                    <Text field="name" id="name-field" />
-        
-                    <label htmlFor="asofdate-field">Date:</label>
-                    <DateInput field="asOfDate" id="asofdate-field" />
-        
-                    <label htmlFor="desc-bio">Notes:</label>
-                    <TextArea field="desc" id="desc-bio" />
-        
-                    <label htmlFor="amount-field">Amount:</label>
-                    <Text field="amount" id="amount-field" />
-        
-                    <label htmlFor="currency-field">Currency:</label>
-                    <Select field="currency" id="currency-field" initialValue={this.defaultCurrency}>
-                        <Option value={this.state.exchangeRates.base}>{this.state.exchangeRates.base}</Option>
-                        {this.getRatesArray().map((val, i) => {
-                            return <Option key={i} value={val}>{val}</Option>
-                        })}
-                    </Select>
-        
-                    <button type="submit">
-                        Submit
-                    </button>
-                </Form>
+                <div className='add-bill-container'>
+                    <button className="add-bill button" onClick={() => this._form.toggleShow()}>Add Bill</button>
+                    <div className='add-bill-form-container' style={{display:'none'}} ref={(el) => this._form = el}>
+                        <Form id="simple-form" onSubmit={this.handleOnFormSubmit} className='add-bill-form'>
+                            {({ formState }) => (
+                            <div className="add-bill-form-inner">
+                                <div className="column-left column">
+                                    <div className="field">
+                                        <label htmlFor="name-field">Name</label>
+                                        <Text field="name" id="name-field" validate={required} validateOnBlur className={formState.errors.name ? 'error': ''} />
+                                        {formState.errors.name &&
+                                            <span className="error">{formState.errors.name}</span>
+                                        }
+                                    </div>
+                                    <div className="field">
+                                        <label htmlFor="asofdate-field">Date</label>
+                                        <DateInput field="asOfDate" id="asofdate-field" validate={required} />
+                                    </div>
+                                    
+                                    <div className="field">
+                                        <label htmlFor="amount-field">Amount</label>
+                                        <Text field="amount" id="amount-field" />
+                                        <Select field="currency" id="currency-field" initialValue={this.defaultCurrency}>
+                                            <Option value={this.state.exchangeRates.base}>{this.state.exchangeRates.base}</Option>
+                                            {this.getRatesArray().map((val, i) => {
+                                                return <Option key={i} value={val}>{val}</Option>
+                                            })}
+                                        </Select>
+                                    </div>
+                                    
+                                    {formState.invalid &&
+                                        <div className="form-validation-errors">
+                                            {Object.keys(formState.errors).map((val) => {
+                                                return <li>{val}: {formState.errors[val]}</li>
+                                            })}
+                                        </div>
+                                    }
+
+                                    <div className="buttons">
+                                        <button type="submit" className="button">
+                                            Submit
+                                        </button>
+                                        <button className="button" onClick={(e) => {
+                                            this._form.toggleShow(); 
+                                            e.preventDefault()
+                                        }}>Cancel</button>
+                                    </div>
+                                </div>
+                                <div className="column-right column">
+                                    <div className="field">                          
+                                        <label htmlFor="desc-bio">Notes</label>
+                                        <TextArea field="desc" id="desc-bio" rows="6" />
+                                    </div> 
+                                </div>  
+                            </div>
+                            )}
+                        </Form>
+                    </div>
+                </div>
             </div>
         );
     }
